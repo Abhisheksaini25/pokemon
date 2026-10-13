@@ -1,0 +1,191 @@
+/* ==========================================================================
+   RESPONSIVE LAYOUT & MOBILE ADAPTATION
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Small Screens & Mobile Phones (<= 480px)
+   -------------------------------------------------------------------------- */
+@media screen and (max-width: 480px) {
+    .intro-content {
+        padding: 36px 22px;
+        border-radius: 20px;
+    }
+
+    .intro-prompt {
+        font-size: 1.15rem;
+        margin-bottom: 24px;
+    }
+
+    .btn-glow-large {
+        padding: 16px 42px;
+        font-size: 1.2rem;
+        letter-spacing: 2px;
+    }
+
+    .greeting-content {
+        padding: 40px 20px;
+        border-radius: 20px;
+    }
+
+    .greeting-lead {
+        font-size: 1.6rem;
+        letter-spacing: 2.5px;
+    }
+
+    .greeting-name {
+        font-size: 3.2rem;
+        margin: 6px 0 16px;
+    }
+
+    .greeting-subtitle {
+        font-size: 1.05rem;
+        margin-bottom: 28px;
+    }
+
+    #cake-img {
+        width: min(290px, 86vw);
+    }
+
+    #flame-canvas {
+        top: -128px;
+        width: 110px;
+        height: 140px;
+    }
+
+    .instruction-text {
+        font-size: 1rem;
+        margin-bottom: 20px;
+        padding: 0 10px;
+    }
+
+    .polaroid-frame {
+        width: 95vw;
+        padding: 12px 12px 16px;
+    }
+
+    .memories-title {
+        font-size: 1.4rem;
+        letter-spacing: 2px;
+    }
+
+    .memories-subtitle {
+        font-size: 0.9rem;
+    }
+
+    .modal-card {
+        padding: 30px 20px;
+        border-radius: 20px;
+    }
+
+    .modal-title {
+        font-size: 1.25rem;
+    }
+
+    .modal-message {
+        font-size: 0.98rem;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   2. Tablets & Medium Screens (481px to 768px)
+   -------------------------------------------------------------------------- */
+@media screen and (min-width: 481px) and (max-width: 768px) {
+    .greeting-name {
+        font-size: 4.4rem;
+    }
+
+    #cake-img {
+        width: 320px;
+    }
+
+    .polaroid-frame {
+        width: 420px;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   3. Landscape Orientation on Mobile Devices
+   -------------------------------------------------------------------------- */
+@media screen and (max-height: 540px) and (orientation: landscape) {
+    .intro-content,
+    .greeting-content {
+        padding: 24px 30px;
+        max-width: 540px;
+    }
+
+    .intro-prompt {
+        font-size: 1.1rem;
+        margin-bottom: 16px;
+    }
+
+    .btn-glow-large {
+        padding: 12px 34px;
+        font-size: 1.1rem;
+    }
+
+    .intro-subtext {
+        margin-top: 14px;
+    }
+
+    .greeting-lead {
+        font-size: 1.4rem;
+    }
+
+    .greeting-name {
+        font-size: 2.8rem;
+        margin: 4px 0 10px;
+    }
+
+    .greeting-subtitle {
+        font-size: 0.95rem;
+        margin-bottom: 16px;
+    }
+
+    #cake-img {
+        width: 240px;
+    }
+
+    #flame-canvas {
+        top: -128px;
+    }
+
+    .instruction-text {
+        font-size: 0.95rem;
+        margin-bottom: 14px;
+    }
+
+    .polaroid-frame {
+        width: 380px;
+        padding: 10px 10px 14px;
+    }
+
+    .photo-wrapper {
+        aspect-ratio: 16 / 9;
+    }
+
+    .carousel-header {
+        margin-bottom: 10px;
+    }
+
+    .memories-title {
+        font-size: 1.25rem;
+    }
+
+    .modal-card {
+        padding: 20px 24px;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    .modal-image-wrapper {
+        aspect-ratio: 16 / 9;
+        max-height: 160px;
+    }
+
+    .milestone-image-wrapper {
+        aspect-ratio: 244 / 400;
+        max-height: 180px;
+        max-width: calc(180px * (244 / 400));
+        margin-bottom: 12px;
+    }
+}

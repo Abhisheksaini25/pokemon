@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+    <meta name="description" content="An interactive, cinematic dark-emerald and neon-green birthday celebration.">
+    <meta name="theme-color" content="#020503">
+    <title>Happy Birthday Celebration ✦</title>
+
+    <!-- Google Fonts Preconnect & Fonts (Outfit & Dancing Script) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Outfit:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Custom Theme Stylesheets -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/responsive.css">
+
+    <!-- Vendored Libraries with CDN fallbacks -->
+    <script src="assets/htmx.min.js" onerror="this.onerror=null; this.src='https://unpkg.com/htmx.org@1.9.12/dist/htmx.min.js';"></script>
+    <script src="assets/gsap.min.js" onerror="this.onerror=null; this.src='https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js';"></script>
+    <script src="assets/confetti.min.js" onerror="this.onerror=null; this.src='https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js';"></script>
+</head>
+<body>
+    <div id="app" class="stage-intro">
+        <!-- Ambient Deep Obsidian-Emerald Background Glow -->
+        <div id="background-glow" aria-hidden="true"></div>
+
+        <!-- 1. Starfield Canvas (Twinkling stars & cosmic green dust) -->
+        <canvas id="stars-canvas" aria-hidden="true"></canvas>
+
+        <!-- 2. Fireworks Canvas (Rockets, bursts, sparkle trails) -->
+        <canvas id="fireworks-canvas" aria-hidden="true"></canvas>
+
+        <!-- 3. 3D Glossy Interactive Balloons Canvas (100% Green Shades, poppable with touch/click) -->
+        <canvas id="balloons-canvas" aria-hidden="true"></canvas>
+
+        <!-- 4. Confetti Canvas (High performance 3D tumbling particles) -->
+        <canvas id="confetti-canvas" aria-hidden="true"></canvas>
+
+        <!-- 5. Screen Flash Overlay (Subtle emerald-white burst on key moments) -->
+        <div id="flash-overlay" aria-hidden="true"></div>
+
+        <!-- Main Screen Flow State Machine -->
+        <main id="main-stage">
+            <!-- ============================================================
+                 SCREEN 1 — OPENING SCREEN
+                 ============================================================ -->
+            <section id="screen-intro" class="stage-screen active" aria-live="polite">
+                <div class="intro-content glass-card">
+                    <div class="sparkle-cluster">✦ ✦ ✦</div>
+                    <p id="intro-prompt" class="intro-prompt">A little surprise awaits you...</p>
+                    <button id="btn-open" class="btn-glow-large" aria-label="Open birthday surprise">
+                        OPEN ✦
+                    </button>
+                    <span id="intro-subtext" class="intro-subtext">Tap to begin the celebration</span>
+                </div>
+            </section>
+
+            <!-- ============================================================
+                 SCREEN 2 — BIRTHDAY GREETING REVEAL
+                 ============================================================ -->
+            <section id="screen-greeting" class="stage-screen hidden" aria-live="polite" aria-hidden="true">
+                <div class="greeting-content glass-card">
+                    <div class="sparkle-cluster">✨ ✦ ✨</div>
+                    <h2 id="greeting-lead" class="greeting-lead">HAPPY BIRTHDAY</h2>
+                    <h1 id="greeting-name" class="greeting-name">PRINCE</h1>
+                    <p id="greeting-subtitle" class="greeting-subtitle">Today is all about you.</p>
+                    <button id="btn-celebrate" class="glass-btn primary-glow" aria-label="Let's celebrate">
+                        LET'S CELEBRATE ✦
+                    </button>
+                </div>
+            </section>
+
+            <!-- ============================================================
+                 SCREEN 3 — BIRTHDAY CAKE & CANDLE BLOWING
+                 ============================================================ -->
+            <section id="screen-cake" class="stage-screen hidden" aria-hidden="true">
+                <div class="cake-container">
+                    <div class="cake-spotlight" aria-hidden="true"></div>
+                    
+                    <div id="cake-wrapper" class="interactive-cake" role="button" tabindex="0" aria-label="Birthday cake with candle. Tap to blow out.">
+                        <!-- Dynamic Flickering Flame Canvas positioned precisely over cake candle wick -->
+                        <canvas id="flame-canvas" aria-hidden="true"></canvas>
+                        <!-- Cake with attached candle from assets/images/cake.png -->
+                        <img id="cake-img" src="assets/images/cake.png" alt="Delicious Birthday Cake" draggable="false">
+                    </div>
+
+                    <div id="cake-instruction" class="instruction-text">
+                        Make a wish and tap the cake to blow out the candle.
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================================
+                 SCREEN 4 — BIRTHDAY MEMORIES CAROUSEL
+                 ============================================================ -->
+            <section id="screen-memories" class="stage-screen hidden" aria-hidden="true">
+                <div class="carousel-container">
+                    <header class="carousel-header">
+                        <h2 id="memories-header-title" class="memories-title">LITTLE MOMENTS, BIG MEMORIES</h2>
+                        <p id="memories-header-subtitle" class="memories-subtitle">Every memory with you is a treasure to keep.</p>
+                    </header>
+
+                    <!-- Polaroid Photo Frame Carousel (Auto-loops every 2-3s without manual buttons) -->
+                    <div id="carousel-wrapper" class="polaroid-frame" role="region" aria-label="Photo carousel">
+                        <div class="polaroid-inner">
+                            <div class="photo-wrapper">
+                                <img id="carousel-img-current" class="carousel-photo" src="assets/images/memory-1.jpg" alt="Current Memory" draggable="false">
+                            </div>
+                            <div class="polaroid-caption">
+                                <h3 id="carousel-caption-title" class="caption-title">Pure Joy & Celebrations</h3>
+                                <p id="carousel-caption-text" class="caption-text">Unforgettable laughter, adventures, and bright smiles 💫</p>
+                            </div>
+                        </div>
+
+                        <!-- Dot Indicators -->
+                        <div id="carousel-dots" class="carousel-dots" role="tablist"></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- ============================================================
+             EASTER EGG #1: TIMED SURPRISE POPUP (12s after Carousel)
+             ============================================================ -->
+        <div id="modal-timed-surprise" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-hidden="true">
+            <div class="modal-card glass-card">
+                <div class="modal-sparkles-top">✦ 💚 ✦</div>
+                <h3 id="timed-modal-title" class="modal-title">A SPECIAL THOUGHT FOR YOU</h3>
+                <p id="timed-modal-message" class="modal-message">Some people make ordinary moments extraordinary. You're one of them. 💚</p>
+                <button id="timed-modal-close-btn" class="glass-btn primary-glow modal-btn">Keep Celebrating ✨</button>
+            </div>
+        </div>
+
+        <!-- ============================================================
+             EASTER EGG #2: BALLOON MILESTONE POPUP (22nd Balloon Popped)
+             ============================================================ -->
+        <div id="modal-milestone-surprise" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-hidden="true">
+            <div class="modal-card glass-card milestone-card">
+                <div class="modal-image-wrapper milestone-image-wrapper">
+                    <img id="milestone-modal-img" src="assets/images/surprise.jpg" alt="Special Surprise Memory" draggable="false">
+                </div>
+                <p id="milestone-modal-message" class="modal-message">Here's a little reminder of how special you are. Never stop being the wonderful person you are. 💚</p>
+                <button id="milestone-modal-close-btn" class="glass-btn primary-glow modal-btn">Thank You! ✨</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Background Music Audio Element -->
+    <audio id="bg-audio" loop preload="auto">
+        <source src="assets/audio/birthday-music.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Application Scripts -->
+    <script src="js/constants.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/effects.js"></script>
+    <script src="js/carousel.js"></script>
+    <script src="js/surprises.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

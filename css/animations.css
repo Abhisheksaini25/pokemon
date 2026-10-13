@@ -1,0 +1,116 @@
+/* ==========================================================================
+   ANIMATIONS & KEYFRAME EFFECTS (SOFTER, ELEGANT EMERALD THEME)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Neon Glow & Pulse Keyframes
+   -------------------------------------------------------------------------- */
+@keyframes neonPulse {
+    0%, 100% {
+        box-shadow: 0 0 20px rgba(16, 185, 129, 0.35),
+                    inset 0 0 12px rgba(16, 185, 129, 0.15);
+        border-color: #10b981;
+    }
+    50% {
+        box-shadow: 0 0 35px rgba(52, 211, 153, 0.6),
+                    inset 0 0 20px rgba(16, 185, 129, 0.28);
+        border-color: #6ee7b7;
+    }
+}
+
+@keyframes floatGentle {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+@keyframes scaleInBounce {
+    0% {
+        opacity: 0;
+        transform: scale(0.85) translateY(15px);
+    }
+    60% {
+        opacity: 1;
+        transform: scale(1.05) translateY(-2px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes modalScaleIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.88) translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes fadeInPhoto {
+    0% {
+        opacity: 0;
+        transform: scale(1.03);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes textGlowShimmer {
+    0%, 100% {
+        text-shadow: 0 0 10px rgba(52, 211, 153, 0.75),
+                     0 0 25px rgba(16, 185, 129, 0.45);
+    }
+    50% {
+        text-shadow: 0 0 15px rgba(110, 231, 183, 0.85),
+                     0 0 32px rgba(52, 211, 153, 0.6);
+    }
+}
+
+/* --------------------------------------------------------------------------
+   2. Utility Animation Classes
+   -------------------------------------------------------------------------- */
+.greeting-name {
+    animation: textGlowShimmer 3.5s infinite ease-in-out;
+}
+
+.intro-content {
+    animation: floatGentle 5s infinite ease-in-out;
+}
+
+/* Fallback reveal classes when GSAP is not present */
+.reveal-active {
+    opacity: 1 !important;
+    transform: translateY(0) scale(1) !important;
+    transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* --------------------------------------------------------------------------
+   3. Accessibility: Prefers Reduced Motion
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .intro-content,
+    .greeting-name,
+    .btn-glow-large {
+        animation: none !important;
+    }
+
+    #flash-overlay {
+        display: none !important;
+    }
+}

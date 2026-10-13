@@ -1,0 +1,705 @@
+/* ==========================================================================
+   ELEGANT OBSIDIAN & SOFT EMERALD BIRTHDAY THEME - CORE STYLES
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Local Fonts & Fallbacks
+   -------------------------------------------------------------------------- */
+@font-face {
+    font-family: "BirthdayFont";
+    src: url("../assets/fonts/stylish_font.ttf") format("truetype"),
+         url("../assets/fonts/font.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* --------------------------------------------------------------------------
+   2. Design Tokens & Toned-down Aesthetic Color Palette
+   -------------------------------------------------------------------------- */
+:root {
+    /* Backgrounds: Deep, rich midnight obsidian with subtle emerald undertone */
+    --color-bg-deep: #020503;
+    --color-bg-dark: #040905;
+    --color-bg-emerald: #08150c;
+    --color-bg-card: rgba(8, 16, 10, 0.78);
+
+    /* Softer Emerald & Mint Accents (Toned down from harsh electric green) */
+    --color-neon-primary: #10b981;
+    --color-neon-bright: #34d399;
+    --color-neon-glow: #6ee7b7;
+    --color-neon-soft: #dcfce7;
+    --color-emerald-deep: #064e3b;
+    --color-emerald-dark: #022c22;
+    --color-accent-lime: #84cc16;
+
+    /* Text Colors */
+    --color-text-white: #ffffff;
+    --color-text-sub: #dcfce7;
+    --color-text-muted: #a7f3d0;
+
+    /* Typography */
+    --font-display: "Dancing Script", "BirthdayFont", cursive, sans-serif;
+    --font-heading: "Outfit", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-body: "Outfit", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+    /* Refined, Elegant Glows */
+    --glow-text-neon: 0 0 10px rgba(52, 211, 153, 0.75),
+                      0 0 25px rgba(16, 185, 129, 0.45);
+    --glow-card: 0 15px 45px rgba(0, 0, 0, 0.85),
+                 0 0 25px rgba(16, 185, 129, 0.12);
+    --glow-border: 0 0 12px rgba(16, 185, 129, 0.3),
+                   inset 0 0 8px rgba(16, 185, 129, 0.1);
+
+    /* Z-Index Hierarchy */
+    --z-bg: 0;
+    --z-stars: 1;
+    --z-fireworks: 2;
+    --z-balloons: 3;
+    --z-main-stage: 10;
+    --z-confetti: 25;
+    --z-flash: 50;
+    --z-modal: 120;
+}
+
+/* --------------------------------------------------------------------------
+   3. Resets & Base
+   -------------------------------------------------------------------------- */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: var(--color-bg-deep);
+    color: var(--color-text-white);
+    font-family: var(--font-body);
+    position: fixed;
+    touch-action: manipulation;
+}
+
+#app {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+    background: radial-gradient(circle at 50% 30%, #08150c 0%, #040905 50%, #020503 100%);
+    transition: background 1.4s ease;
+}
+
+/* Screen 1 (Intro): Pure pitch black background with no green ambient glow */
+#app.stage-intro {
+    background: #000000 !important;
+}
+
+#background-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 85vw;
+    height: 85vh;
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.06) 0%, rgba(6, 78, 59, 0.03) 50%, transparent 80%);
+    pointer-events: none;
+    z-index: var(--z-bg);
+    transition: opacity 1.4s ease;
+}
+
+#app.stage-intro #background-glow {
+    opacity: 0;
+}
+
+/* --------------------------------------------------------------------------
+   4. Canvas Layers
+   -------------------------------------------------------------------------- */
+#stars-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: var(--z-stars);
+}
+
+#fireworks-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: var(--z-fireworks);
+}
+
+#balloons-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: var(--z-balloons);
+    cursor: pointer;
+}
+
+#confetti-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: var(--z-confetti);
+}
+
+/* --------------------------------------------------------------------------
+   5. Glassmorphism Cards & Buttons
+   -------------------------------------------------------------------------- */
+.glass-card {
+    background: var(--color-bg-card);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    border-radius: 24px;
+    box-shadow: var(--glow-card);
+    position: relative;
+    overflow: hidden;
+}
+
+.glass-btn {
+    pointer-events: auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 28px;
+    border-radius: 9999px;
+    background: rgba(8, 28, 16, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(16, 185, 129, 0.35);
+    color: var(--color-text-white);
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5);
+    text-transform: uppercase;
+}
+
+.glass-btn:hover {
+    transform: translateY(-2px) scale(1.03);
+    border-color: var(--color-neon-bright);
+    background: rgba(14, 46, 26, 0.85);
+    box-shadow: 0 6px 22px rgba(16, 185, 129, 0.28);
+}
+
+.glass-btn:active {
+    transform: translateY(0) scale(0.98);
+}
+
+.glass-btn.primary-glow {
+    background: linear-gradient(135deg, rgba(16, 75, 40, 0.85), rgba(6, 38, 20, 0.85));
+    border: 1px solid var(--color-neon-primary);
+    color: #ffffff;
+    box-shadow: 0 0 18px rgba(16, 185, 129, 0.28);
+}
+
+.glass-btn.primary-glow:hover {
+    box-shadow: 0 0 28px rgba(16, 185, 129, 0.45), inset 0 0 10px rgba(16, 185, 129, 0.2);
+}
+
+/* --------------------------------------------------------------------------
+   6. Main Stage Machine & Screens
+   -------------------------------------------------------------------------- */
+#main-stage {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: var(--z-main-stage);
+    pointer-events: none;
+}
+
+.stage-screen {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.96);
+    transition: opacity 0.55s ease, transform 0.55s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.55s;
+    pointer-events: none;
+}
+
+.stage-screen.active {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
+    pointer-events: auto;
+}
+
+.stage-screen.exiting {
+    opacity: 0;
+    transform: scale(1.04);
+}
+
+.stage-screen.hidden {
+    display: none !important;
+}
+
+.sparkle-cluster {
+    color: var(--color-neon-bright);
+    font-size: 1.1rem;
+    letter-spacing: 6px;
+    margin-bottom: 12px;
+    text-shadow: 0 0 10px rgba(52, 211, 153, 0.7);
+}
+
+/* --------------------------------------------------------------------------
+   7. Screen 1: Opening Screen
+   -------------------------------------------------------------------------- */
+.intro-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 48px 40px;
+    max-width: 480px;
+    width: 90%;
+}
+
+.intro-prompt {
+    font-size: 1.35rem;
+    color: var(--color-text-sub);
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    margin-bottom: 32px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+}
+
+.btn-glow-large {
+    pointer-events: auto;
+    position: relative;
+    padding: 20px 54px;
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    font-weight: 800;
+    letter-spacing: 3px;
+    color: #ffffff;
+    background: linear-gradient(135deg, #0e4b24 0%, #052410 100%);
+    border: 1.5px solid var(--color-neon-primary);
+    border-radius: 9999px;
+    cursor: pointer;
+    box-shadow: 0 0 22px rgba(16, 185, 129, 0.35),
+                inset 0 0 12px rgba(16, 185, 129, 0.15);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    animation: neonPulse 3s infinite ease-in-out;
+}
+
+.btn-glow-large:hover {
+    transform: scale(1.06);
+    box-shadow: 0 0 35px rgba(16, 185, 129, 0.65),
+                inset 0 0 20px rgba(16, 185, 129, 0.3);
+    background: linear-gradient(135deg, #135f2e 0%, #073117 100%);
+}
+
+.btn-glow-large:active {
+    transform: scale(0.97);
+}
+
+.intro-subtext {
+    margin-top: 24px;
+    font-size: 0.9rem;
+    color: rgba(167, 243, 208, 0.75);
+    letter-spacing: 0.5px;
+}
+
+/* --------------------------------------------------------------------------
+   8. Screen 2: Birthday Greeting Reveal
+   -------------------------------------------------------------------------- */
+.greeting-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 56px 48px;
+    max-width: 640px;
+    width: 90%;
+}
+
+.greeting-lead {
+    font-size: 2.2rem;
+    font-weight: 800;
+    letter-spacing: 4px;
+    color: var(--color-neon-glow);
+    text-transform: uppercase;
+    text-shadow: 0 0 12px rgba(52, 211, 153, 0.5);
+    margin-bottom: 8px;
+}
+
+.greeting-name {
+    font-family: var(--font-display);
+    font-size: clamp(3.8rem, 8vw, 5.8rem);
+    font-weight: 700;
+    color: #ffffff;
+    text-shadow: var(--glow-text-neon);
+    margin: 8px 0 20px;
+    line-height: 1.1;
+    letter-spacing: 1px;
+}
+
+.greeting-subtitle {
+    font-size: 1.25rem;
+    color: var(--color-text-sub);
+    font-weight: 300;
+    line-height: 1.6;
+    margin-bottom: 36px;
+    max-width: 480px;
+}
+
+/* --------------------------------------------------------------------------
+   9. Screen 3: Cake & Candle (Using cake.png with attached candle)
+   -------------------------------------------------------------------------- */
+.cake-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    max-width: 500px;
+    width: 100%;
+}
+
+.cake-spotlight {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 320px;
+    height: 320px;
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.16) 0%, rgba(6, 78, 59, 0.05) 55%, transparent 75%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.interactive-cake {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    z-index: 1;
+    margin-bottom: 22px;
+    transition: transform 0.25s ease;
+}
+
+.interactive-cake:hover {
+    transform: scale(1.025);
+}
+
+.interactive-cake:active {
+    transform: scale(0.98);
+}
+
+#cake-img {
+    width: min(340px, 85vw);
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.85));
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+/* Flame Canvas anchored right on top of candle in cake.png */
+#flame-canvas {
+    position: absolute;
+    top: -128px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 150px;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.instruction-text {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--color-neon-soft);
+    letter-spacing: 0.5px;
+    margin-bottom: 24px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+    transition: all 0.4s ease;
+}
+
+.instruction-text.wish-fulfilled {
+    font-size: 1.3rem;
+    color: var(--color-neon-bright);
+    text-shadow: var(--glow-text-neon);
+}
+
+/* --------------------------------------------------------------------------
+   10. Screen 4: Memories Carousel (Polaroid Frame)
+   -------------------------------------------------------------------------- */
+.carousel-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 520px;
+}
+
+.carousel-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.memories-title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    letter-spacing: 3px;
+    color: var(--color-neon-glow);
+    text-shadow: 0 0 12px rgba(52, 211, 153, 0.45);
+    margin-bottom: 6px;
+}
+
+.memories-subtitle {
+    font-size: 1rem;
+    color: var(--color-neon-soft);
+    font-weight: 300;
+}
+
+.polaroid-frame {
+    position: relative;
+    width: min(440px, 90vw);
+    background: rgba(8, 20, 12, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    border-radius: 20px;
+    padding: 16px 16px 20px;
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.85),
+                0 0 25px rgba(16, 185, 129, 0.12);
+}
+
+.polaroid-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.photo-wrapper {
+    width: 100%;
+    aspect-ratio: 4 / 3.8;
+    overflow: hidden;
+    border-radius: 14px;
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    background: #040805;
+}
+
+.carousel-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 14px;
+    transition: opacity 0.45s ease, transform 0.45s ease;
+}
+
+.carousel-photo.fade-in {
+    animation: fadeInPhoto 0.45s ease forwards;
+}
+
+.polaroid-caption {
+    width: 100%;
+    text-align: center;
+    padding: 14px 10px 4px;
+}
+
+.caption-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--color-neon-bright);
+    margin-bottom: 4px;
+    letter-spacing: 0.5px;
+}
+
+.caption-text {
+    font-size: 0.95rem;
+    color: var(--color-text-sub);
+    font-weight: 300;
+    line-height: 1.4;
+}
+
+.carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 14px;
+}
+
+.carousel-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(16, 185, 129, 0.25);
+    border: 1px solid rgba(16, 185, 129, 0.4);
+    cursor: pointer;
+    transition: all 0.25s ease;
+    padding: 0;
+}
+
+.carousel-dot.active {
+    width: 26px;
+    border-radius: 9999px;
+    background: var(--color-neon-primary);
+    box-shadow: 0 0 10px var(--color-neon-primary);
+}
+
+/* --------------------------------------------------------------------------
+   11. Easter Egg Modals
+   -------------------------------------------------------------------------- */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(2, 5, 3, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    z-index: var(--z-modal);
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.modal-overlay.hidden {
+    display: none !important;
+}
+
+.modal-card {
+    text-align: center;
+    padding: 40px 32px;
+    max-width: 480px;
+    width: 90%;
+    background: rgba(6, 18, 10, 0.94);
+    border: 1.5px solid var(--color-neon-primary);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9),
+                0 0 35px rgba(16, 185, 129, 0.25);
+}
+
+.modal-card.milestone-card {
+    max-width: 330px;
+    padding: 26px 20px 22px;
+}
+
+.modal-sparkles-top {
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+}
+
+.modal-title {
+    font-size: 1.45rem;
+    font-weight: 800;
+    color: var(--color-neon-bright);
+    letter-spacing: 1.5px;
+    margin-bottom: 14px;
+    text-shadow: 0 0 12px rgba(52, 211, 153, 0.5);
+}
+
+.modal-message {
+    font-size: 1.05rem;
+    color: var(--color-text-sub);
+    line-height: 1.55;
+    margin-bottom: 20px;
+}
+
+.modal-image-wrapper {
+    width: 100%;
+    aspect-ratio: 4 / 3.8;
+    overflow: hidden;
+    border-radius: 16px;
+    border: 1px solid rgba(16, 185, 129, 0.35);
+    margin-bottom: 20px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+}
+
+.modal-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Custom 244x400 full-fit wrapper for the milestone surprise image */
+.milestone-image-wrapper {
+    width: 100%;
+    max-width: 244px;
+    aspect-ratio: 244 / 400;
+    margin: 0 auto 16px;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(16, 185, 129, 0.4);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.75),
+                0 0 20px rgba(16, 185, 129, 0.2);
+    background: #020503;
+}
+
+.milestone-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+.modal-btn {
+    width: 100%;
+    padding: 14px 28px;
+    font-size: 1.05rem;
+}
+
+.modal-enter {
+    animation: modalScaleIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.modal-exit {
+    opacity: 0;
+    transform: scale(0.92);
+    transition: all 0.25s ease;
+}
+
+/* --------------------------------------------------------------------------
+   12. Screen Flash Overlay
+   -------------------------------------------------------------------------- */
+#flash-overlay {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    background: radial-gradient(circle, rgba(220, 255, 230, 0.45) 0%, rgba(16, 185, 129, 0.15) 60%, transparent 100%);
+    opacity: 0;
+    pointer-events: none;
+    z-index: var(--z-flash);
+    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#flash-overlay.active {
+    opacity: 1;
+}
